@@ -26445,38 +26445,16 @@ globalThis.pdfjsLib = {
 
 // src/index.js
 GlobalWorkerOptions.workerSrc = void 0;
-function byteArrayToUint8Array(arr) {
-  return new Uint8Array(arr);
-}
-async function extractPdfText(input) {
-  let pdfDataAsUint8Array;
-  try {
-    if (input instanceof Uint8Array) {
-      pdfDataAsUint8Array = input;
-    } else if (input instanceof ArrayBuffer) {
-      pdfDataAsUint8Array = new Uint8Array(input);
-    } else if (typeof Buffer !== "undefined" && Buffer.isBuffer(input)) {
-      pdfDataAsUint8Array = new Uint8Array(input);
-    } else if (Array.isArray(input)) {
-      pdfDataAsUint8Array = byteArrayToUint8Array(input);
-    } else if (input && typeof input.read === "function") {
-      throw new Error("A entrada parece ser um Stream. Por favor, converta o Stream para um byte[], ArrayBuffer ou Buffer antes de chamar esta fun\xE7\xE3o.");
-    } else {
-      throw new Error("Tipo de entrada n\xE3o suportado. Use ArrayBuffer, Uint8Array, Buffer ou um Array de bytes (byte[]).");
-    }
-    const pdfDocument = await getDocument({ data: pdfDataAsUint8Array }).promise;
-    let allText = "";
-    for (let i = 1; i <= pdfDocument.numPages; i++) {
-      const page = await pdfDocument.getPage(i);
-      const textContent = await page.getTextContent();
-      const pageText = textContent.items.map((item) => item.str).join(" ");
-      allText += pageText + "\n";
-    }
-    return allText.trim();
-  } catch (error) {
-    console.log("Erro ao processar o PDF: " + (error.message || error));
-    throw new Error(`Falha ao extrair texto do PDF: ${error.message}`);
+async function extractPdfText(pdfDataAsUint8Array) {
+  const pdfDocument = await getDocument({ data: pdfDataAsUint8Array }).promise;
+  let allText = "";
+  for (let i = 1; i <= pdfDocument.numPages; i++) {
+    const page = await pdfDocument.getPage(i);
+    const textContent = await page.getTextContent();
+    const pageText = textContent.items.map((item) => item.str).join(" ");
+    allText += pageText + "\n";
   }
+  return allText.trim();
 }
 export {
   extractPdfText
