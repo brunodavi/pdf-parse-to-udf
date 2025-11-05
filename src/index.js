@@ -1,3 +1,5 @@
+import 'url-polyfill/url-polyfill.js';
+
 // Importa as funções necessárias da versão ESM do pdf.js
 import { getDocument, GlobalWorkerOptions } from 'pdfjs-dist/build/pdf.mjs';
 
