@@ -3,7 +3,8 @@
   "version": "1.0.1",
   "type": "module",
   "dependencies": {
-    "pdfjs-dist": "^4.5.136"
+    "pdfjs-dist": "^4.5.136",
+    "url-polyfill": "^1.1.14"
   },
   "devDependencies": {
     "esbuild": "^0.23.0"
