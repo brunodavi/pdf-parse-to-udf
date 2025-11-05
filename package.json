@@ -7,7 +7,7 @@
     "url-polyfill": "^1.1.14"
   },
   "devDependencies": {
-    "esbuild": "^0.23.0"
+    "esbuild": "^0.25.0"
   },
   "scripts": {
     "build": "esbuild src/index.js --bundle --platform=neutral --format=esm --target=es2020 --outfile=dist/index.bundle.js"
